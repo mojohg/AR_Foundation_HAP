@@ -136,7 +136,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void SimpleARButtonPressed()
         {
-            LoadScene("SimpleAR");
+            LoadScene("Anchors_3");
         }
 
         public void ImageTrackableButtonPressed()
@@ -149,12 +149,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void BasicImageTrackingButtonPressed()
         {
-            LoadScene("BasicImageTracking");
+            LoadScene("Anchors_1");
         }
 
         public void MultiImagesTrackingButtonPressed()
         {
-            LoadScene("ImageTrackingWithMultiplePrefabs");
+            LoadScene("Anchors_2");
         }
 
         public void AnchorsButtonPressed()
