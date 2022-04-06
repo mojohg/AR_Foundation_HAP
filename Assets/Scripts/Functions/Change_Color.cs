@@ -9,25 +9,20 @@ public class Change_Color : MonoBehaviour
     public float rFloat;
     public float gFloat;
     public float bFloat;
-    public float aFloat;
-
-    
-
-    
-
+    public float aFloat;   
     private Color defaultColor;
 
     public Renderer myRenderer;
 
-    // Start is called before the first frame update
+    // Get Component 
     void Start()
     { 
       myRenderer = gameObject.GetComponent<Renderer>();   
     }
 
     
-    // Function to blink Boxes
-    public void Light_Box()
+    // Function to highlight Box dynamic
+    public void Light_Box_Blink()
     {
 
         if (gFloat < 1)
@@ -41,13 +36,25 @@ public class Change_Color : MonoBehaviour
         myColor = new Color(rFloat, gFloat, bFloat, aFloat);
         myRenderer.material.color = myColor;
         return;
+        
     }
 
+    // Function to highlight Box static
+    public void Light_Box()
+    {
+        myColor = new Color(rFloat, gFloat, bFloat, aFloat);
+        myRenderer.material.color = myColor;
+        return;
+    }
     // Function to Reset to default color
     public void Reset_Box()
     {
         myRenderer.material.color = defaultColor;
         return;
+    }
+    public void Move_x_left()
+    {
+
     }
 
 }
