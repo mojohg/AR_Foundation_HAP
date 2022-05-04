@@ -4,57 +4,111 @@ using UnityEngine;
 
 public class Adjust_Calibration : MonoBehaviour
 {
-    public GameObject unLock_Movement;
-    public GameObject lock_Movement;
-    public GameObject box_Track_renderer;
+    private GameObject unLock_Movement;
+    private GameObject lock_Movement;
+
+   
 
     private Touch touch;
     private float speedmodifier;
+   // private float speedmodifier_rot;
+    
 
-    public bool status;
+    private bool status;
+    private bool TouchStatus = false;
+
+    private Text_Debugger text_Debugger;
+    private GameObject _Debugger;
+
     // Start is called before the first frame update
    
     void Awake()
     {
-        unLock_Movement = GameObject.Find("UnLock");
-        lock_Movement = GameObject.Find("Lock");
+        _Debugger = GameObject.Find("Debug");
         
+        text_Debugger = _Debugger.GetComponent<Text_Debugger>();
     }
     
     void Start()
     {
-        speedmodifier = 0.005f;
+        speedmodifier = 0.0005f;
         status = false;
         unLock_Movement.SetActive(false);
+        //speedmodifier_rot = 0.8f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0 && status == false && Input.touchCount < 2)
+       
+        var fingerCount = 0;
+        foreach(Touch touch in Input.touches)
         {
-            touch = Input.GetTouch(0);
-
-            if(touch.phase == TouchPhase.Moved)
+            if(touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
             {
-                transform.position = new Vector3(
-                    transform.position.x + touch.deltaPosition.x * speedmodifier,
-                    transform.position.y,
-                    transform.position.z + touch.deltaPosition.y * speedmodifier);
+                fingerCount++;
             }
         }
+        if (fingerCount ==2)
+        {
+            TouchStatus = true;
+            text_Debugger.Print_Debugger("FingerCount = 2");
+        }
+        else
+        {
+            TouchStatus = false;
+            text_Debugger.Print_Debugger("FingerCount = 1");
+        }
+        
+
+        if (status == false && TouchStatus == false)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    transform.position = new Vector3(
+                        transform.position.x + touch.deltaPosition.x * speedmodifier,
+                        transform.position.y,
+                        transform.position.z + touch.deltaPosition.y * speedmodifier);
+                        text_Debugger.Print_Debugger("Position");
+                }
+            }
+            Debug.Log("In Update status" + status);
+        }
+
+        if(TouchStatus == true && status ==false)
+        {
+            Touch screenTouch = Input.GetTouch(0);
+            if(screenTouch.phase == TouchPhase.Moved)
+            {
+                transform.Rotate(0f, screenTouch.deltaPosition.x  , 0f);
+                text_Debugger.Print_Debugger("Rotation");
+            }
+        }
+       
+
     }
 
    public void Lock_movement()
     {
         status = true;
-        lock_Movement.SetActive(false);
-        unLock_Movement.SetActive(true);
+       
+        Debug.Log("status = true");
+       
+        Debug.Log(status);
+        Debug.Log(TouchStatus);
+
     }
    public void UnLock_movement()
     {
         status = false;
-        lock_Movement.SetActive(true);
-        unLock_Movement.SetActive(false);
+       
+        Debug.Log("status = false");
+       
+        Debug.Log(status);
+        Debug.Log(TouchStatus);
     }
 }

@@ -14,34 +14,39 @@ public class Change_Color : MonoBehaviour
 
     public Renderer myRenderer;
 
-    // Get Component 
-    void Start()
-    { 
-      myRenderer = gameObject.GetComponent<Renderer>();   
-    }
+    private bool blink;
+    
 
     
+    void Update()
+    {if (blink == true)
+        {
+            myRenderer = gameObject.GetComponent<Renderer>();
+            if (gFloat < 1)
+            {
+                gFloat += 1 * Time.deltaTime;
+            }
+            else
+            {
+                gFloat = 0;
+            }
+            myColor = new Color(rFloat, gFloat, bFloat, aFloat);
+            myRenderer.material.color = myColor;
+            Debug.Log("BLinkKKK");
+            return;
+        }
+    }
     // Function to highlight Box dynamic
     public void Light_Box_Blink()
     {
-
-        if (gFloat < 1)
-        {
-            gFloat += 1 * Time.deltaTime;
-        }
-        else
-        {
-            gFloat = 0;
-        }
-        myColor = new Color(rFloat, gFloat, bFloat, aFloat);
-        myRenderer.material.color = myColor;
-        return;
-        
+        blink = true;
+        Debug.Log("Blink");
     }
 
     // Function to highlight Box static
     public void Light_Box()
     {
+        myRenderer = gameObject.GetComponent<Renderer>();
         myColor = new Color(rFloat, gFloat, bFloat, aFloat);
         myRenderer.material.color = myColor;
         return;
@@ -52,9 +57,6 @@ public class Change_Color : MonoBehaviour
         myRenderer.material.color = defaultColor;
         return;
     }
-    public void Move_x_left()
-    {
-
-    }
+    
 
 }
