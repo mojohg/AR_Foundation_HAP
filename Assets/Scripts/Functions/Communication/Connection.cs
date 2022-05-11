@@ -25,7 +25,9 @@ public class Connection : MonoBehaviour
         text_Connection = Debug_Text.GetComponent<Text_Connection>();
 
         DontDestroyOnLoad(this.gameObject);
-        websocket = new WebSocket("ws://10.6.246.195:8080");
+        //websocket = new WebSocket("ws://149.201.117.47:48000");
+        websocket = new WebSocket("ws://10.6.169.244:48000");
+        //websocket = new WebSocket("ws://localhost:48000");
 
         websocket.OnOpen += () =>
         {
