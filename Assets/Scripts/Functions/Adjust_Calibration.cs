@@ -24,16 +24,16 @@ public class Adjust_Calibration : MonoBehaviour
    
     void Awake()
     {
-        _Debugger = GameObject.Find("Debug");
+        //_Debugger = GameObject.Find("Debug");
         
-        text_Debugger = _Debugger.GetComponent<Text_Debugger>();
+        //text_Debugger = _Debugger.GetComponent<Text_Debugger>();
     }
     
     void Start()
     {
         speedmodifier = 0.0005f;
         status = false;
-        unLock_Movement.SetActive(false);
+        //unLock_Movement.SetActive(false);
         //speedmodifier_rot = 0.8f;
     }
 
@@ -52,12 +52,12 @@ public class Adjust_Calibration : MonoBehaviour
         if (fingerCount ==2)
         {
             TouchStatus = true;
-            text_Debugger.Print_Debugger("FingerCount = 2");
+            //text_Debugger.Print_Debugger("FingerCount = 2");
         }
         else
         {
             TouchStatus = false;
-            text_Debugger.Print_Debugger("FingerCount = 1");
+           // text_Debugger.Print_Debugger("FingerCount = 1");
         }
         
 
@@ -73,7 +73,7 @@ public class Adjust_Calibration : MonoBehaviour
                         transform.position.x + touch.deltaPosition.x * speedmodifier,
                         transform.position.y,
                         transform.position.z + touch.deltaPosition.y * speedmodifier);
-                        text_Debugger.Print_Debugger("Position");
+                       // text_Debugger.Print_Debugger("Position");
                 }
             }
             Debug.Log("In Update status" + status);
@@ -85,7 +85,7 @@ public class Adjust_Calibration : MonoBehaviour
             if(screenTouch.phase == TouchPhase.Moved)
             {
                 transform.Rotate(0f, screenTouch.deltaPosition.x  , 0f);
-                text_Debugger.Print_Debugger("Rotation");
+               // text_Debugger.Print_Debugger("Rotation");
             }
         }
        

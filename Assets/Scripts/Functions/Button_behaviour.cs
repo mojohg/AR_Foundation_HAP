@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Button_behaviour : MonoBehaviour
-{
+{/*
     public Text Textfield;
     // Variables Animation
     public float smoothTime = 0.5f;
@@ -20,7 +20,7 @@ public class Button_behaviour : MonoBehaviour
     public float aFloat;
     private Color defaultColor;
 
-
+    */
    
 
     public Renderer myRenderer;
@@ -39,20 +39,7 @@ public class Button_behaviour : MonoBehaviour
 
     private Change_Color change_color;
 
-    void Awake()
-    {
-       
-
-    }
-
-    void Update()
-    {
-        
-        
-       
-
-       
-    }
+    
 
     //Animations
     public void Move_Animation()

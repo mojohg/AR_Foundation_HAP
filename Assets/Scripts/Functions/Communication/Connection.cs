@@ -8,6 +8,14 @@ public class Connection : MonoBehaviour
 {
     WebSocket websocket;
 
+
+    [SerializeField]
+    private GameObject Connection_GO;
+    private GameObject GO_uI_Handler;
+    private UI_Handler uI_Handler;
+
+    private Text_Connection text_Connection;
+
     private UserInstruction instruction = new UserInstruction();
     private OrderProperties order_properties = new OrderProperties();
     private PerformanceProperties performance_info = new PerformanceProperties();
@@ -16,18 +24,14 @@ public class Connection : MonoBehaviour
     private bool init_received = false;
     private IEnumerator coroutine;
 
-    public GameObject Debug_Text;
-    private Text_Connection text_Connection;
-
     // Start is called before the first frame update
     void Start()
     {
-        text_Connection = Debug_Text.GetComponent<Text_Connection>();
-
+        GO_uI_Handler = GameObject.FindGameObjectWithTag("UI_Handler");
+        uI_Handler = GO_uI_Handler.GetComponent<UI_Handler>();
+        text_Connection = Connection_GO.GetComponent<Text_Connection>();
         DontDestroyOnLoad(this.gameObject);
-        //websocket = new WebSocket("ws://149.201.117.47:48000");
-        websocket = new WebSocket("ws://10.6.169.244:48000");
-        //websocket = new WebSocket("ws://localhost:48000");
+        websocket = new WebSocket("wss://i40.fh-aachen.de/arvr-ws:48000");
 
         websocket.OnOpen += () =>
         {
@@ -38,6 +42,7 @@ public class Connection : MonoBehaviour
                 retry = true;  // reset variable for next connection loss
             }
             connected = true;
+            uI_Handler.Show_Connection_State(connected);
         };
 
         websocket.OnMessage += (bytes) =>
@@ -47,7 +52,8 @@ public class Connection : MonoBehaviour
             if (message.Length > 0)
             {
                 ExecuteCommand(message);
-                message = "";
+                Debug_Text(message);
+               message = "";
             }
         };
 
@@ -60,6 +66,7 @@ public class Connection : MonoBehaviour
         {
             Debug.Log("Connection closed - " + e);
             connected = false;
+            uI_Handler.Show_Connection_State(connected);
         };
 
         // InvokeRepeating("SendHeartbeat", 0.0f, 0.3f);  // Heartbeat at every 0.3s
@@ -82,12 +89,7 @@ public class Connection : MonoBehaviour
                 StartCoroutine(coroutine);
             }
         }
-        
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            websocket.SendText("Space HIT");
-        }
+       
     }
 
     IEnumerator RetryConnectionCoroutine()
@@ -97,11 +99,6 @@ public class Connection : MonoBehaviour
         retry = true;
     }
 
-    public void Test_Button()
-    {
-        websocket.SendText("Hello Server");
-    }
-
     void ExecuteCommand(string message)
     {
         Debug.Log(message);
@@ -109,12 +106,12 @@ public class Connection : MonoBehaviour
         {
             SendWebSocketMessage("ACK-Connected");
         }
-        else if (message.Contains("new_instructions"))  //Reset support for next work step
+       /* else if (message.Contains("new_instructions"))  //Reset support for next work step
         {
-           // this.GetComponent<MessageHandler>().NewInstructions();
+            this.GetComponent<MessageHandler>().NewInstructions();
             init_received = true;
             SendWebSocketMessage("ACK-new_instructions");
-        }
+        }*/
         else if (message.Contains("version"))  //Set product version
         {
             order_properties = JsonConvert.DeserializeObject<OrderProperties>(message);
@@ -127,12 +124,12 @@ public class Connection : MonoBehaviour
             this.GetComponent<MessageHandler>().InitializeSteps(order_properties.number_steps);
             SendWebSocketMessage("ACK-number_steps");
         }
-        else if (message.Contains("number_points"))  //Set number of points
+       /* else if (message.Contains("number_points"))  //Set number of points
         {
             order_properties = JsonConvert.DeserializeObject<OrderProperties>(message);
-           // this.GetComponent<MessageHandler>().InitializePoints(order_properties.number_points);
+            this.GetComponent<MessageHandler>().InitializePoints(order_properties.number_points);
             SendWebSocketMessage("ACK-number_points");
-        }
+        }*/
         else if (message.Contains("action_type"))  //Show instruction
         {
             if (init_received)  // Only execute messages if init was received
@@ -200,16 +197,14 @@ public class Connection : MonoBehaviour
         {
             this.GetComponent<MessageHandler>().FinishJob();
         }
-        else if (message.Contains("performance"))
+        /*else if (message.Contains("performance"))
         {
             performance_info = JsonConvert.DeserializeObject<PerformanceProperties>(message);
-          //  this.GetComponent<MessageHandler>().ParsePerformanceMessage(performance_info);
-        }
+            this.GetComponent<MessageHandler>().ParsePerformanceMessage(performance_info);
+        }*/
         else
         {
             Debug.Log("Unknown message type: " + message);
-            text_Connection.SetText(message);
-            
         }
     }
 
@@ -245,4 +240,15 @@ public class Connection : MonoBehaviour
     {
         await websocket.Close();
     }
+
+    public void SendTestCommunication()
+    {
+        SendWebSocketMessage("Hello_AR");
+    }
+    public void Debug_Text(string message)
+    {
+        text_Connection.SetText(message);
+    }
+
+    
 }

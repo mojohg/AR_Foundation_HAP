@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class Change_Color : MonoBehaviour
 {
     public Color myColor;
-    public float rFloat;
-    public float gFloat;
-    public float bFloat;
-    public float aFloat;   
-    private Color defaultColor;
+    private float rFloat = 0;
+    private float gFloat = 0;
+    private float bFloat = 0;
+    private float aFloat;   
+    private Color defaultColor = Color.white;
 
     public Renderer myRenderer;
 
@@ -22,17 +22,17 @@ public class Change_Color : MonoBehaviour
     {if (blink == true)
         {
             myRenderer = gameObject.GetComponent<Renderer>();
-            if (gFloat < 1)
+            if (bFloat < 1)
             {
-                gFloat += 1 * Time.deltaTime;
+                bFloat += 1 * Time.deltaTime;
             }
             else
             {
-                gFloat = 0;
+                bFloat = 0;
             }
             myColor = new Color(rFloat, gFloat, bFloat, aFloat);
             myRenderer.material.color = myColor;
-            Debug.Log("BLinkKKK");
+            
             return;
         }
     }
@@ -40,7 +40,7 @@ public class Change_Color : MonoBehaviour
     public void Light_Box_Blink()
     {
         blink = true;
-        Debug.Log("Blink");
+        
     }
 
     // Function to highlight Box static

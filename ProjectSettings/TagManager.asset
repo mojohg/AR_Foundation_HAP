@@ -8,6 +8,10 @@ TagManager:
   - Box
   - Model
   - Calibration
+  - Inital_Scene
+  - Setting_Scene
+  - Manualmode_Scene
+  - UI_Handler
   layers:
   - Default
   - TransparentFX

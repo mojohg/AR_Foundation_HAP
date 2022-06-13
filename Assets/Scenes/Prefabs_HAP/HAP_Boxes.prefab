@@ -519,6 +519,11 @@ PrefabInstance:
       propertyPath: myRenderer
       value: 
       objectReference: {fileID: 4152362218523867681}
+    - target: {fileID: 455324303296584845, guid: 8643a8dd2d6e58b4fa6c50990e67c0e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 606558062657143734, guid: 8643a8dd2d6e58b4fa6c50990e67c0e7,
         type: 3}
       propertyPath: target

@@ -50,9 +50,10 @@ public class Animation_Movement : MonoBehaviour
     }
     public void Move()
     {
-        run = true;
-        
-        
+        run = true;   
     }
-    
+    public void Stop()
+    {
+        run = false;
+    }
 }
