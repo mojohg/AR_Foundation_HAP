@@ -20,6 +20,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool object_found = false;
 
 
+       
 
         public GameObject prefab
         {
@@ -122,7 +123,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 TrackableType.PlaneWithinPolygon;
 
             // Perform the raycast
-            if (m_RaycastManager.Raycast(touch.position, s_Hits, trackableTypes) )
+            if (m_RaycastManager.Raycast(touch.position, s_Hits, trackableTypes) && object_added == false)
             {
                 
                     // Raycast hits are sorted by distance, so the first one will be the closest hit.

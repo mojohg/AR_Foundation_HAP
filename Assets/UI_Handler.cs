@@ -17,6 +17,7 @@ public class UI_Handler : MonoBehaviour
     private GameObject Audio;
     private GameObject Mute;
     private GameObject Sound_on;
+    private GameObject Start_Training;
     
 
 
@@ -39,15 +40,20 @@ public class UI_Handler : MonoBehaviour
         Audio = GameObject.Find("Audio");
         NO_WIFI = GameObject.Find("NO_WIFI");
         WIFI = GameObject.Find("WIFI");
+        Start_Training = GameObject.Find("Start_Training");
         Setting_Scene = GameObject.FindGameObjectsWithTag("Setting_Scene");
         Manualmode_Scene = GameObject.FindGameObjectsWithTag("Manualmode_Scene");
         Inital_Scene = GameObject.FindGameObjectsWithTag("Inital_Scene");
+
        
 
         Load_Inital_Scene();
         
     }
-
+    public void Start_Training_Button()
+    {
+        Start_Training.SetActive(false);
+    }
     
     public void Load_Setting_Scene()
     {
@@ -115,6 +121,7 @@ public class UI_Handler : MonoBehaviour
             manualmode_Scene.SetActive(false);
         }
         Sound_on.SetActive(false);
+        Start_Training.SetActive(true);
         return;
     }
     public void Show_Connection_State(bool connected)

@@ -68,7 +68,7 @@ public class Object_Handler : MonoBehaviour
     public static List<model> models = new List<model>();
 
 
-
+    private GameObject Calibration_Box;
     private GameObject Target_1;
     private GameObject Target_2;
     private GameObject Target_3;
@@ -130,6 +130,7 @@ public class Object_Handler : MonoBehaviour
     {
         if (List_added == false)
         {
+            Calibration_Box = GameObject.Find("Calibration_Box");
             targets.Add(new target("Target_1", Target_1));
             targets.Add(new target("Target_2", Target_2));
             targets.Add(new target("Target_3", Target_3));
@@ -189,7 +190,10 @@ public class Object_Handler : MonoBehaviour
         }
         else Manual_State = false;
     }
-
+    public void Start_Training()
+    {
+        Calibration_Box.SetActive(false);
+    }
 
     public void Update()
     {
